@@ -18,11 +18,9 @@ class CUBDataset(Dataset):
             transforms.Normalize((0.5,)*3, (0.5,)*3)
         ])
 
-        # Load filenames
         with open(os.path.join(self.emb_root, 'filenames.pickle'), 'rb') as f:
             self.filenames = pickle.load(f)
 
-        # Load embeddings (.pickle): shape should be (num_images, 10, embedding_dim)
         with open(os.path.join(self.emb_root, 'char-CNN-RNN-embeddings.pickle'), 'rb') as f:
             self.embeddings = pickle.load(f, encoding='latin1')
 
