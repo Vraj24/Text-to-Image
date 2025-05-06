@@ -1,4 +1,3 @@
-# utils/debug_caption_loader.py
 import pickle
 
 captions = pickle.load(open('data/cub_text_embeddings/captions.pickle', 'rb'))
