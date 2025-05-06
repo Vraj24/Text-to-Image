@@ -1,4 +1,3 @@
-# utils/generate_caption_pickle.py
 import os
 import pickle
 
@@ -14,7 +13,6 @@ for class_folder in sorted(os.listdir(text_dir)):
         if not txt_file.endswith('.txt'): continue
         txt_path = os.path.join(class_path, txt_file)
 
-        # Read and clean lines
         with open(txt_path, 'r') as f:
             lines = f.readlines()
             lines = [line.strip().lower() for line in lines if line.strip()]
@@ -23,6 +21,4 @@ for class_folder in sorted(os.listdir(text_dir)):
 
 print(f"Total image captions: {len(captions)}")
 
-# Save
-# pickle.dump(captions, open('data/cub_text_embeddings/captions.pickle', 'wb'))
 pickle.dump(filenames, open('data/cub_text_embeddings/filenames.pickle', 'wb'))
