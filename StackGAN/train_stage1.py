@@ -1,35 +1,3 @@
-# # train_stage1.py
-
-# from utils.data_loader import CUBDataset
-# from torch.utils.data import DataLoader
-
-# def main():
-#     dataset = CUBDataset(
-#     img_root='data/cub_dataset/CUB_200_2011/CUB_200_2011/images',
-#     embedding_root='data/cub_text_embeddings',
-#     split='train'
-#     )
-
-#     img, emb = dataset[0]
-#     print("Image shape:", img.shape)
-#     print("Text embedding shape:", emb.shape)
-
-
-
-#     # dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=4)
-
-#     # for images, text_embeddings in dataloader:
-#     #     print("Image batch shape:", images.shape)
-#     #     print("Text embedding shape:", text_embeddings.shape)
-#     #     break
-
-# if __name__ == '__main__':
-#     main()
-
-
-
-# -----------------------------------------------------------
-
 import os
 import torch
 import torch.nn as nn
