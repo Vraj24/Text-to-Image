@@ -39,6 +39,7 @@ output/ → Stage I images(It will be 16 images in 4x4 format per epoch with ind
 output22/ → Stage II refined images(It will be 16 images in 4x4 format per epoch with individual image size of 256x256)
 
 **Notes**
+
 The training uses pre-extracted 1024-dim text embeddings.
 
 Make sure your dataset paths match those in data_loader.py.
