@@ -1,0 +1,31 @@
+name: ldm
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip>=22.0
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - tqdm
+  - pillow
+  - scikit-image
+  - imageio
+  - ipykernel
+  - jupyter
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pip:
+      - transformers
+      - omegaconf
+      - einops
+      - pytorch-lightning
+      - kornia
+      - albumentations
+      - opencv-python
+      - taming-transformers-rom1504
+      - invisible-watermark
+

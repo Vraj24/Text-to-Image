@@ -1,0 +1,3 @@
+target: ldm.modules.encoders.modules.FrozenCLIPEmbedder
+params:
+  layer: "penultimate"
