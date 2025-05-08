@@ -1,0 +1,91 @@
+model:
+  base_learning_rate: 1.0e-05
+  target: ldm.models.diffusion.ddpm.LatentDiffusion
+  params:
+    unet_config:
+      target: ldm.modules.diffusionmodules.openaimodel.UNetModel
+      params:
+        image_size: 64
+        in_channels: 4
+        out_channels: 4
+        model_channels: 320
+        attention_resolutions: [4, 2, 1]
+        num_res_blocks: 2
+        channel_mult: [1, 2, 4, 4]
+        num_heads: 8
+        use_spatial_transformer: True
+        transformer_depth: 1
+        context_dim: 768
+        use_checkpoint: True
+        legacy: False
+
+    # first_stage_config: configs/latent-diffusion/cin-ldm-vq-f8.yaml
+    first_stage_config:
+      target: ldm.models.autoencoder.AutoencoderKL
+      params:
+        embed_dim: 4
+        monitor: val/rec_loss
+        ddconfig:
+          double_z: true
+          z_channels: 4
+          resolution: 256
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult: [1, 2, 4, 4]
+          num_res_blocks: 2
+          attn_resolutions: []
+          dropout: 0.0
+        lossconfig:
+          target: torch.nn.Identity
+
+    # cond_stage_config: configs/latent_diffusion/clip_transformer.yaml
+    # cond_stage_config: configs/retrieval-augmented-diffusion/768x768.yaml
+    cond_stage_config:
+      target: ldm.modules.encoders.modules.FrozenCLIPEmbedder
+      # params:
+      #   layer: "penultimate"
+
+    cond_stage_key: "txt"
+    image_size: 64
+    channels: 4
+    monitor: "val/loss_simple_ema"
+    scale_factor: 0.18215
+    use_ema: True
+    timesteps: 1000
+
+# data:
+#   target: ldm.data.cub_dataset.CUBDataset
+#   params:
+#     image_root: /N/scratch/shah52/stable-diffusion/data/CUB_200_2011/CUB_200_2011/images
+#     captions_root: /N/scratch/shah52/stable-diffusion/data/cub_text_embeddings/text
+#     batch_size: 4
+#     num_workers: 4
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 4
+    num_workers: 2
+    train:
+      target: ldm.data.cub_dataset.CUBDataset
+      params:
+        image_root: data/CUB_200_2011/CUB_200_2011/images
+        captions_root: data/cub_text_embeddings/text
+
+lightning:
+  # callbacks:
+  #   image_logger:
+  #     target: ldm.modules.logger.ImageLogger
+  #     params:
+  #       batch_frequency: 1000
+  #       max_images: 4
+  #       clamp: True
+
+  trainer:
+    max_epochs: 1
+    limit_train_batches: 5
+    # gpus: 0
+    # devices: 1
+    accelerator: cpu
+    precision: 32
